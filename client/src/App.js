@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import IdeasContainer from './components/IdeasContainer'
+import { Ideas } from './pages/Ideas'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 const Home = () => (
@@ -34,7 +34,7 @@ class App extends Component {
           <div className="pageContent">
             <Route exact path="/" component={Home} />
             <Route path="/about" component={About} />
-            <Route path="/ideas" component={IdeasContainer} />
+            <Route path="/ideas" component={Ideas} />
           </div>
         </div>
       </Router>

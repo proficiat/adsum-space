@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 import Idea from './Idea'
 import IdeaForm from './IdeaForm'
 import axios from 'axios'
@@ -15,13 +17,15 @@ class IdeasContainer extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get('api/v1/ideas')
-      .then(response => {
-        console.log(response)
-        this.setState({ ideas: response.data })
-      })
-      .catch(error => console.log(error))
+    const { onFetchIdeas } = this.props
+    onFetchIdeas()
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    // temporary solution
+    if (nextProps.ideas.length > 0 && this.state.ideas.length === 0) {
+      this.setState({ ideas: nextProps.ideas })
+    }
   }
 
   addNewIdea = () => {
@@ -78,6 +82,7 @@ class IdeasContainer extends Component {
   }
 
   render() {
+    console.log('ideas: ', this.props.ideas)
     return (
       <div>
         <button className="newIdeaButton" onClick={this.addNewIdea}>
@@ -111,6 +116,11 @@ class IdeasContainer extends Component {
       </div>
     )
   }
+}
+
+IdeasContainer.propTypes = {
+  ideas: PropTypes.array.isRequired,
+  onFetchIdeas: PropTypes.func.isRequired
 }
 
 export default IdeasContainer
