@@ -11,6 +11,14 @@ import registerServiceWorker from './registerServiceWorker'
 import rootReducer from './redux/reducers'
 import mySaga from './redux/sagas'
 
+import WebFont from 'webfontloader'
+
+WebFont.load({
+  google: {
+    families: ['Alegreya Sans', 'sans-serif']
+  }
+})
+
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware()
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

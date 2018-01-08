@@ -6,6 +6,8 @@ import IdeaForm from './IdeaForm'
 import axios from 'axios'
 import update from 'immutability-helper'
 
+import { NewIdeaButton } from './styles'
+
 class IdeasContainer extends Component {
   constructor(props) {
     super(props)
@@ -82,16 +84,15 @@ class IdeasContainer extends Component {
   }
 
   render() {
+    const { notification, ideas, editingIdeaId } = this.state
     console.log('ideas: ', this.props.ideas)
     return (
       <div>
-        <button className="newIdeaButton" onClick={this.addNewIdea}>
-          New Idea
-        </button>
-        <span className="notification">{this.state.notification}</span>
+        <NewIdeaButton onClick={this.addNewIdea}>New Idea</NewIdeaButton>
+        <span>{notification}</span>
         <div>
-          {this.state.ideas.map(idea => {
-            if (this.state.editingIdeaId === idea.id) {
+          {ideas.map(idea => {
+            if (editingIdeaId === idea.id) {
               return (
                 <IdeaForm
                   idea={idea}

@@ -1,23 +1,29 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { IdeaCard, IdeaHeader, IdeaBody, DeleteButton } from './styles'
+
 class Idea extends Component {
   handleClick = () => {
-    this.props.onClick(this.props.idea.id)
+    const { onClick, idea: { id: ideaId } } = this.props
+    onClick(ideaId)
   }
 
   handleDelete = () => {
-    this.props.onDelete(this.props.idea.id)
+    const { onDelete, idea: { id: ideaId } } = this.props
+    onDelete(ideaId)
   }
   render() {
+    const { idea } = this.props
+    const { title, body } = idea
     return (
-      <div className="tile">
-        <span className="deleteButton" onClick={this.handleDelete}>
-          X
-        </span>
-        <h4 onClick={this.handleClick}>{this.props.idea.title}</h4>
-        <p onClick={this.handleClick}>{this.props.idea.body}</p>
-      </div>
+      <IdeaCard>
+        <IdeaHeader>
+          <DeleteButton onClick={this.handleDelete}>X</DeleteButton>
+          {title}
+        </IdeaHeader>
+        <IdeaBody onClick={this.handleClick}>{body}</IdeaBody>
+      </IdeaCard>
     )
   }
 }

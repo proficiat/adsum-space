@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 
 import axios from 'axios'
 
+import { IdeaCard } from './styles'
+
 class IdeaForm extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      title: this.props.idea.title,
-      body: this.props.idea.body
-    }
+    const { idea: { title, body } } = this.props
+    this.state = { title, body }
   }
 
   handleInput = e => {
@@ -36,7 +36,7 @@ class IdeaForm extends Component {
 
   render() {
     return (
-      <div className="tile">
+      <IdeaCard>
         <form onBlur={this.handleBlur}>
           <input
             ref={this.props.titleRef}
@@ -55,7 +55,7 @@ class IdeaForm extends Component {
             onChange={this.handleInput}
           />
         </form>
-      </div>
+      </IdeaCard>
     )
   }
 }
