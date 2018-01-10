@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import axios from 'axios'
-
 import { IdeaCard } from './styles'
 
 class IdeaForm extends Component {
@@ -13,25 +11,19 @@ class IdeaForm extends Component {
   }
 
   handleInput = e => {
-    this.props.resetNotification()
-    this.setState({ [e.target.name]: e.target.value })
+    const { resetNotification } = this.props
+    const { name, value } = e.target
+    resetNotification()
+    this.setState({ [name]: value })
   }
 
   handleBlur = () => {
+    const { updateIdea, idea: { id } } = this.props
     const idea = {
       title: this.state.title,
       body: this.state.body
     }
-
-    axios
-      .put(`api/v1/ideas/${this.props.idea.id}`, {
-        idea: idea
-      })
-      .then(response => {
-        console.log(response)
-        this.props.updateIdea(response.data)
-      })
-      .catch(error => console.log(error))
+    updateIdea(id, idea)
   }
 
   render() {

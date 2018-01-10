@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import Idea from './Idea'
 import IdeaForm from './IdeaForm'
-import axios from 'axios'
-import update from 'immutability-helper'
 
 import { NewIdeaButton } from './styles'
 
@@ -12,10 +10,11 @@ class IdeasContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      ideas: [],
       editingIdeaId: null,
       notificiation: ''
     }
+
+    this.title = null
   }
 
   componentDidMount() {
@@ -23,43 +22,10 @@ class IdeasContainer extends Component {
     onFetchIdeas()
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    // temporary solution
-    if (nextProps.ideas.length > 0 && this.state.ideas.length === 0) {
-      this.setState({ ideas: nextProps.ideas })
-    }
-  }
-
-  addNewIdea = () => {
-    axios
-      .post('api/v1/ideas', {
-        idea: {
-          title: '',
-          body: ''
-        }
-      })
-      .then(response => {
-        console.log(response)
-        const ideas = update(this.state.ideas, {
-          $splice: [[0, 0, response.data]]
-        })
-        this.setState({
-          ideas: ideas,
-          editingIdeaId: response.data.id
-        })
-      })
-      .catch(error => console.log(error))
-  }
-
-  updateIdea = idea => {
-    const ideaIndex = this.state.ideas.findIndex(x => x.id === idea.id)
-    const ideas = update(this.state.ideas, {
-      [ideaIndex]: { $set: idea }
-    })
-    this.setState({
-      ideas: ideas,
-      notification: 'All changes saved'
-    })
+  updateIdea = (ideaId, idea) => {
+    const { onUpdateIdea } = this.props
+    onUpdateIdea(ideaId, idea)
+    this.setState({ notification: 'All changes saved' })
   }
 
   resetNotification = () => {
@@ -72,23 +38,21 @@ class IdeasContainer extends Component {
     })
   }
 
-  deleteIdea = id => {
-    axios
-      .delete(`api/v1/ideas/${id}`)
-      .then(response => {
-        const ideaIndex = this.state.ideas.findIndex(x => x.id === id)
-        const ideas = update(this.state.ideas, { $splice: [[ideaIndex, 1]] })
-        this.setState({ ideas: ideas })
-      })
-      .catch(error => console.log(error))
+  addEmptyIdea = () => {
+    const { onCreateIdea } = this.props
+    const emptyIdea = {
+      title: '',
+      body: ''
+    }
+    onCreateIdea(emptyIdea)
   }
 
   render() {
-    const { notification, ideas, editingIdeaId } = this.state
-    console.log('ideas: ', this.props.ideas)
+    const { ideas, onDeleteIdea } = this.props
+    const { notification, editingIdeaId } = this.state
     return (
       <div>
-        <NewIdeaButton onClick={this.addNewIdea}>New Idea</NewIdeaButton>
+        <NewIdeaButton onClick={this.addEmptyIdea}>New Idea</NewIdeaButton>
         <span>{notification}</span>
         <div>
           {ideas.map(idea => {
@@ -108,7 +72,7 @@ class IdeasContainer extends Component {
                   idea={idea}
                   key={idea.id}
                   onClick={this.enableEditing}
-                  onDelete={this.deleteIdea}
+                  onDelete={onDeleteIdea}
                 />
               )
             }
@@ -121,7 +85,10 @@ class IdeasContainer extends Component {
 
 IdeasContainer.propTypes = {
   ideas: PropTypes.array.isRequired,
-  onFetchIdeas: PropTypes.func.isRequired
+  onDeleteIdea: PropTypes.func.isRequired,
+  onUpdateIdea: PropTypes.func.isRequired,
+  onFetchIdeas: PropTypes.func.isRequired,
+  onCreateIdea: PropTypes.func.isRequired
 }
 
 export default IdeasContainer
