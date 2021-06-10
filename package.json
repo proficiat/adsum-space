@@ -1,7 +1,7 @@
 {
-  "name": "adsum-space",
+  "name": "react-and-rails",
   "engines": {
-    "node": "8.9.3"
+    "node": ">= 10.x.x"
   },
   "scripts": {
     "build": "cd client && npm install && npm run build && cd ..",
