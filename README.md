@@ -1,6 +1,12 @@
 # Adsum Space
 
-Space Ship Shielded Badlands :)
+- ReactJS  
+- Redux 
+- Redux-saga
+- Ruby on Rails API
+- Heroku App
+
+Playground
 
 This is about No Message.
 
@@ -45,6 +51,29 @@ $ git commit -m "..."
 $ git push -u origin your_branch
 ```
 
-[__Heroku link__](https://shielded-badlands-82587.herokuapp.com/)
+#### Heroku
+First, create app
+```
+heroku apps:create
+```
+Let’s now tell Heroku to start by building the node app using package.json, and then build the rails app.
+```
+heroku buildpacks:add heroku/nodejs --index 1
+heroku buildpacks:add heroku/ruby --index 2
+```
+Last thing is to change our `react-scripts` from `devDependencies` to `dependencies`. Why? Because Heroku sets an `ENV` var, `NPM_CONFIG_PRODUCTION`, to `true`, which means your build will disregard any devDependencies and it will fail, nicht gut.
+Now we are ready to push this out to Heroku.
+```
+git add .
+git commit -m "ready for first push to heroku"
+git push heroku master
+```
+Let’s not forget to create and seed the database…
+```
+heroku run rake db:migrate
+heroku run rake db:seed
+```
+
+[__Heroku link__](https://infinite-sands-15879.herokuapp.com)
 
 *Have a good day!*
