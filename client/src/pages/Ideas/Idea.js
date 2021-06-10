@@ -5,12 +5,18 @@ import { IdeaCard, IdeaHeader, IdeaBody, DeleteButton } from './styles'
 
 class Idea extends Component {
   handleClick = () => {
-    const { onClick, idea: { id: ideaId } } = this.props
+    const {
+      onClick,
+      idea: { id: ideaId },
+    } = this.props
     onClick(ideaId)
   }
 
   handleDelete = () => {
-    const { onDelete, idea: { id: ideaId } } = this.props
+    const {
+      onDelete,
+      idea: { id: ideaId },
+    } = this.props
     onDelete(ideaId)
   }
   render() {
@@ -31,7 +37,7 @@ class Idea extends Component {
 Idea.propTypes = {
   idea: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired
+  onDelete: PropTypes.func.isRequired,
 }
 
 export default Idea

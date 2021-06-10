@@ -5,28 +5,29 @@ import {
   fetchIdeas,
   createIdea,
   deleteIdea,
-  updateIdea
+  updateIdea,
 } from '../../redux/actions/ideas'
 
-const mapStateToProps = state => ({
-  ideas: state.ideas.ideasList
+const mapStateToProps = (state) => ({
+  ideas: state.ideas.ideasList,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onFetchIdeas: () => {
     dispatch(fetchIdeas())
   },
-  onCreateIdea: idea => {
+  onCreateIdea: (idea) => {
     dispatch(createIdea(idea))
   },
-  onDeleteIdea: ideaId => {
+  onDeleteIdea: (ideaId) => {
     dispatch(deleteIdea(ideaId))
   },
   onUpdateIdea: (ideaId, idea) => {
     dispatch(updateIdea(ideaId, idea))
-  }
+  },
 })
 
-export const Ideas = connect(mapStateToProps, mapDispatchToProps)(
-  IdeasContainer
-)
+export const Ideas = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IdeasContainer)

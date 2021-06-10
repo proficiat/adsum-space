@@ -11,7 +11,7 @@ class IdeasContainer extends Component {
     super(props)
     this.state = {
       editingIdeaId: null,
-      notificiation: ''
+      notificiation: '',
     }
 
     this.title = null
@@ -32,7 +32,7 @@ class IdeasContainer extends Component {
     this.setState({ notification: '' })
   }
 
-  enableEditing = id => {
+  enableEditing = (id) => {
     this.setState({ editingIdeaId: id }, () => {
       this.title.focus()
     })
@@ -42,7 +42,7 @@ class IdeasContainer extends Component {
     const { onCreateIdea } = this.props
     const emptyIdea = {
       title: '',
-      body: ''
+      body: '',
     }
     onCreateIdea(emptyIdea)
   }
@@ -55,13 +55,13 @@ class IdeasContainer extends Component {
         <NewIdeaButton onClick={this.addEmptyIdea}>New Idea</NewIdeaButton>
         <span>{notification}</span>
         <div>
-          {ideas.map(idea => {
+          {ideas.map((idea) => {
             if (editingIdeaId === idea.id) {
               return (
                 <IdeaForm
                   idea={idea}
                   key={idea.id}
-                  titleRef={input => (this.title = input)}
+                  titleRef={(input) => (this.title = input)}
                   updateIdea={this.updateIdea}
                   resetNotification={this.resetNotification}
                 />
@@ -88,7 +88,7 @@ IdeasContainer.propTypes = {
   onDeleteIdea: PropTypes.func.isRequired,
   onUpdateIdea: PropTypes.func.isRequired,
   onFetchIdeas: PropTypes.func.isRequired,
-  onCreateIdea: PropTypes.func.isRequired
+  onCreateIdea: PropTypes.func.isRequired,
 }
 
 export default IdeasContainer

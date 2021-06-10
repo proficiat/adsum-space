@@ -15,8 +15,8 @@ import WebFont from 'webfontloader'
 
 WebFont.load({
   google: {
-    families: ['Alegreya Sans', 'sans-serif']
-  }
+    families: ['Alegreya Sans', 'sans-serif'],
+  },
 })
 
 // create the saga middleware

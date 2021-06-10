@@ -6,11 +6,13 @@ import { IdeaCard } from './styles'
 class IdeaForm extends Component {
   constructor(props) {
     super(props)
-    const { idea: { title, body } } = this.props
+    const {
+      idea: { title, body },
+    } = this.props
     this.state = { title, body }
   }
 
-  handleInput = e => {
+  handleInput = (e) => {
     const { resetNotification } = this.props
     const { name, value } = e.target
     resetNotification()
@@ -18,10 +20,13 @@ class IdeaForm extends Component {
   }
 
   handleBlur = () => {
-    const { updateIdea, idea: { id } } = this.props
+    const {
+      updateIdea,
+      idea: { id },
+    } = this.props
     const idea = {
       title: this.state.title,
-      body: this.state.body
+      body: this.state.body,
     }
     updateIdea(id, idea)
   }
@@ -56,7 +61,7 @@ IdeaForm.propTypes = {
   idea: PropTypes.object.isRequired,
   titleRef: PropTypes.any,
   updateIdea: PropTypes.func.isRequired,
-  resetNotification: PropTypes.func.isRequired
+  resetNotification: PropTypes.func.isRequired,
 }
 
 export default IdeaForm

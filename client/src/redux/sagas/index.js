@@ -12,18 +12,18 @@ import {
   ideasFetchFailed,
   createIdeaFailed,
   deleteIdeaFailed,
-  updateIdeaFailed
+  updateIdeaFailed,
 } from '../actions/ideas'
 
 const fetchIdeasList = () => {
   return axios.get('api/v1/ideas')
 }
 
-const createIdea = idea => {
+const createIdea = (idea) => {
   return axios.post('api/v1/ideas', { idea: idea })
 }
 
-const deleteIdea = ideaId => {
+const deleteIdea = (ideaId) => {
   return axios.delete(`api/v1/ideas/${ideaId}`)
 }
 
@@ -42,7 +42,9 @@ function* handleFetchIdeasList(action) {
 
 function* handleCreateIdea(action) {
   try {
-    const { payload: { idea } } = action
+    const {
+      payload: { idea },
+    } = action
     const response = yield call(createIdea, idea)
     const createdIdea = response.data
     yield put(createIdeaSuccess(createdIdea))
@@ -53,7 +55,9 @@ function* handleCreateIdea(action) {
 
 function* handleDeleteIdea(action) {
   try {
-    const { payload: { ideaId: deletedIdeaId } } = action
+    const {
+      payload: { ideaId: deletedIdeaId },
+    } = action
     yield call(deleteIdea, deletedIdeaId)
     yield put(deleteIdeaSuccess(deletedIdeaId))
   } catch (e) {
@@ -63,7 +67,9 @@ function* handleDeleteIdea(action) {
 
 function* handleUpdateIdea(action) {
   try {
-    const { payload: { ideaId, idea } } = action
+    const {
+      payload: { ideaId, idea },
+    } = action
     const response = yield call(updateIdea, ideaId, idea)
     const updatedIdea = response.data
     yield put(updateIdeaSuccess(updatedIdea))
@@ -93,6 +99,6 @@ export default function* root() {
     fork(fetchIdeaSaga),
     fork(createIdeaSaga),
     fork(deleteIdeaSaga),
-    fork(updateIdeaSaga)
+    fork(updateIdeaSaga),
   ])
 }
