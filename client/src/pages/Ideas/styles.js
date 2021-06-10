@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.div``
 
 export const NewIdeaButton = styled.button`
-  background: lightgrey;
+  background: black;
   color: white;
   border: none;
   font-size: 22px;
