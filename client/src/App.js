@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import './App.css'
+import React from 'react'
+import './App.scss'
 import { Ideas } from './pages/Ideas'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
 
 const Home = () => (
   <div>
@@ -15,31 +15,49 @@ const About = () => (
   </div>
 )
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <div className="App">
-          <ul className="navigationBar">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/ideas">Ideas</Link>
-            </li>
-          </ul>
-          <div className="pageContent">
-            <Route exact path="/" component={Home} />
-            <Route path="/about" component={About} />
-            <Route path="/ideas" component={Ideas} />
-          </div>
+const PAGES = {
+  home: {
+    to: '/',
+    link: 'Home',
+    component: Home,
+  },
+  about: {
+    to: '/about',
+    link: 'About',
+    component: About,
+  },
+  ideas: {
+    to: '/ideas',
+    link: 'Ideas',
+    component: Ideas,
+  },
+}
+
+const App = () => {
+  const pages = Object.values(PAGES)
+  return (
+    <Router>
+      <div>
+        <nav>
+          {pages.map((page, index) => (
+            <NavLink key={index} activeClassName="selected" exact to={page.to}>
+              {page.link}
+            </NavLink>
+          ))}
+        </nav>
+        <div className="pageContent">
+          {pages.map((page, index) => (
+            <Route
+              key={index}
+              exact
+              path={page.to}
+              component={page.component}
+            />
+          ))}
         </div>
-      </Router>
-    )
-  }
+      </div>
+    </Router>
+  )
 }
 
 export default App

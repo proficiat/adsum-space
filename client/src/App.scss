@@ -1,0 +1,32 @@
+@import '~bootstrap/scss/bootstrap';
+
+nav {
+  background-color: #20232a;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  height: 50px;
+
+  .selected {
+    color: green;
+  }
+  
+  a {
+    color: white;
+    padding: 0 18px;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.pageContent {
+  margin-top: 50px;
+  display: flex;
+  flex: 1 0 auto;
+}

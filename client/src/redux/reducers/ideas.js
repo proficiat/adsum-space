@@ -10,6 +10,7 @@ const initialState = {
   ideasList: [],
   editingIdeaId: null,
 }
+
 const ideas = (state = initialState, action) => {
   switch (action.type) {
     case IDEAS_FETCH_SUCCESSED:
